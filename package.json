@@ -1,0 +1,14 @@
+{
+  "name": "whatsapp-telegram-ban-bot",
+  "version": "6.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.0",
+    "telegraf": "^4.15.3",
+    "fs-extra": "^11.2.0",
+    "lowdb": "^6.1.1"
+  }
+}
