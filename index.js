@@ -365,13 +365,35 @@
         }
     </style>
     
-
+    <script>
+        document.write('<style>#splash-screen { display: none !important; }</style>');
+    </script>
 </head>
 <body>
 
     <audio id="welcome-audio" src="welcome.mp3" preload="auto"></audio>
 
+    <div id="splash-screen">
+        <img src="welcome-image.png" id="splash-img" class="splash-img" alt="Welcome Character">
+        
+        <div style="text-align: center;">
+            <div class="splash-text-welcome">✨ أهلاً بك في ✨</div>
+            <div class="splash-text-brand">𝑲𝒆𝒎𝒐 𝑺𝒕𝒐𝒓𝒆</div>
+        </div>
 
+        <div class="splash-buttons-container">
+            <div class="splash-btn-wrapper">
+                <button class="splash-btn" onclick="handleAuth('login')">تسجيل الدخول</button>
+                <span class="splash-btn-desc">لديك حساب بالفعل</span>
+            </div>
+            <div class="splash-btn-wrapper">
+                <button class="splash-btn outline" onclick="handleAuth('signup')">حساب جديد</button>
+                <span class="splash-btn-desc">مستخدم لأول مرة</span>
+            </div>
+        </div>
+
+        <button class="splash-skip-btn" onclick="skipSplashScreen()">تصفح المتجر كزائر مؤقتاً</button>
+    </div>
 
     <header>
         <div class="logo"><i class="fa-solid fa-gamepad"></i> 𝑲𝒆𝒎𝒐 𝑺𝒕𝒐𝒓𝒆</div>
