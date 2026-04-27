@@ -84,57 +84,7 @@
         
         button, a, input, select, .product-card, .close-side { touch-action: manipulation; }
         
-        /* ================= شاشة البداية (Splash Screen) ================= */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg-dark); z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease-out, visibility 0.6s;
-            overflow: hidden;
-        }
-        #splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .splash-img {
-            width: 250px; height: 250px; max-width: 80vw; object-fit: contain; margin-bottom: 20px;
-            transform: translateY(150px); opacity: 0;
-            animation: splashSlideUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
-        }
-        .splash-text-welcome {
-            font-size: 26px; font-weight: 800; color: var(--text-main); margin-bottom: 5px;
-            transform: translateX(150px); opacity: 0; text-shadow: 0 0 10px rgba(255,255,255,0.2);
-            animation: splashSlideRight 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.8s;
-        }
-        .splash-text-brand {
-            font-size: 40px; font-weight: 900; color: var(--primary);
-            transform: translateY(50px); opacity: 0; text-shadow: 0 5px 15px rgba(248, 158, 27, 0.4);
-            animation: splashSlideUpFade 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.5s;
-        }
-        .splash-buttons-container {
-            display: flex; gap: 20px; margin-top: 40px;
-            opacity: 0; transform: scale(0.9);
-            animation: splashFadeIn 0.8s ease-out forwards 2.5s;
-        }
-        .splash-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .splash-btn {
-            background: var(--primary); color: #000; border: none; padding: 12px 30px;
-            border-radius: 30px; font-size: 16px; font-weight: 900; font-family: 'Cairo'; cursor: pointer;
-            min-width: 130px; box-shadow: 0 5px 15px rgba(248, 158, 27, 0.3); transition: 0.2s;
-        }
-        .splash-btn.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); box-shadow: none; }
-        .splash-btn:active { transform: scale(0.95); }
-        .splash-btn-desc { font-size: 11px; color: var(--text-muted); font-weight: bold; }
-        
-        .splash-skip-btn {
-            margin-top: 30px; background: transparent; border: none; color: var(--text-muted);
-            text-decoration: underline; cursor: pointer; font-size: 13px; font-family: 'Cairo';
-            opacity: 0; animation: splashFadeIn 0.8s ease-out forwards 3s;
-        }
 
-        @keyframes splashSlideUp { to { transform: translateY(0); opacity: 1; } }
-        @keyframes splashSlideRight { to { transform: translateX(0); opacity: 1; } }
-        @keyframes splashSlideUpFade { to { transform: translateY(0); opacity: 1; } }
-        @keyframes splashFadeIn { to { opacity: 1; transform: scale(1); } }
-        /* ================================================================ */
 
         header { background: var(--bg-card); position: sticky; top: 0; z-index: 1000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid var(--border-color); }
         .logo { font-size: 24px; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 8px; }
@@ -365,35 +315,13 @@
         }
     </style>
     
-    <script>
-        document.write('<style>#splash-screen { display: none !important; }</style>');
-    </script>
+
 </head>
 <body>
 
     <audio id="welcome-audio" src="welcome.mp3" preload="auto"></audio>
 
-    <div id="splash-screen">
-        <img src="welcome-image.png" id="splash-img" class="splash-img" alt="Welcome Character">
-        
-        <div style="text-align: center;">
-            <div class="splash-text-welcome">✨ أهلاً بك في ✨</div>
-            <div class="splash-text-brand">𝑲𝒆𝒎𝒐 𝑺𝒕𝒐𝒓𝒆</div>
-        </div>
 
-        <div class="splash-buttons-container">
-            <div class="splash-btn-wrapper">
-                <button class="splash-btn" onclick="handleAuth('login')">تسجيل الدخول</button>
-                <span class="splash-btn-desc">لديك حساب بالفعل</span>
-            </div>
-            <div class="splash-btn-wrapper">
-                <button class="splash-btn outline" onclick="handleAuth('signup')">حساب جديد</button>
-                <span class="splash-btn-desc">مستخدم لأول مرة</span>
-            </div>
-        </div>
-
-        <button class="splash-skip-btn" onclick="skipSplashScreen()">تصفح المتجر كزائر مؤقتاً</button>
-    </div>
 
     <header>
         <div class="logo"><i class="fa-solid fa-gamepad"></i> 𝑲𝒆𝒎𝒐 𝑺𝒕𝒐𝒓𝒆</div>
@@ -685,12 +613,7 @@
             });
         });
 
-        function skipSplashScreen() {
-            const splash = document.getElementById('splash-screen');
-            splash.classList.add('hidden');
-            setTimeout(() => splash.style.display = 'none', 600);
-            localStorage.setItem('kemo_splash_skipped', 'true');
-        }
+
 
         window.addEventListener('load', () => {
             if(!localStorage.getItem('kemo_tutorial_seen')) {
@@ -826,7 +749,7 @@
                         } else {
                             isAuthProcessing = false;
                             updateUIForLogIn(result.user);
-                            finalizeLoginSuccess(result, false, document.getElementById('splash-screen'));
+                            finalizeLoginSuccess(result, false);
                         }
                     } 
                     else if (actionType === 'signup') {
@@ -840,7 +763,7 @@
                             db.ref(`kemo_users/${result.user.uid}/registered`).set(true);
                             isAuthProcessing = false;
                             updateUIForLogIn(result.user);
-                            finalizeLoginSuccess(result, true, document.getElementById('splash-screen'));
+                            finalizeLoginSuccess(result, true);
                         }
                     }
                 });
@@ -850,11 +773,7 @@
             }); 
         }
 
-        function finalizeLoginSuccess(result, isNewUser, splash) {
-            if(splash) {
-                splash.classList.add('hidden');
-                setTimeout(() => splash.style.display = 'none', 600);
-            }
+        function finalizeLoginSuccess(result, isNewUser) {
             localStorage.setItem('kemo_is_logged_in', 'true');
 
             if (isNewUser) { 
@@ -915,19 +834,10 @@
 
         auth.onAuthStateChanged(user => {
             if(isAuthProcessing) return;
-
-            const splashScreen = document.getElementById('splash-screen');
             if(user) {
                 localStorage.setItem('kemo_is_logged_in', 'true');
-                if(splashScreen) {
-                    splashScreen.classList.add('hidden');
-                    setTimeout(() => splashScreen.style.display = 'none', 600);
-                }
                 updateUIForLogIn(user);
             } else {
-                if(splashScreen && localStorage.getItem('kemo_splash_skipped') === 'true') {
-                    splashScreen.style.display = 'none';
-                }
                 updateUIForLogOut();
             }
         });
